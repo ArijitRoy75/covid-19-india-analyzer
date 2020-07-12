@@ -1,4 +1,4 @@
-my_packages = c("Rcpp","plyr","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","prophet","DT")
+my_packages = c("drat","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","prophet","DT")
 
 install_if_missing = function(p) {
     if (p %in% rownames(installed.packages()) == FALSE) {
