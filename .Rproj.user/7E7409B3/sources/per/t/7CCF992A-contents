@@ -104,7 +104,7 @@ for (i in c(4:7)) {
 # Define UI ----
 ui <- fluidPage(theme = shinytheme("journal"),
                 navbarPage("COVID-19 India Analyzer",
-                           theme = shinytheme("flatly"),
+                           theme = shinytheme("darkly"),
                            position = "fixed-top",
                            windowTitle = "COVID-19 India Analyzer",
                            collapsible = TRUE,
@@ -118,10 +118,10 @@ ui <- fluidPage(theme = shinytheme("journal"),
                                     h1("Welcome to COVID-19 India Analyzer", align = "center"),
                                     tags$br(),
                                     tags$br(),
-                                    h5("We, some data analytics enthusiats have tried our share in analyzing predicting the COVID-19 situation in India.",align="center"),
+                                    h5("We, some data analytics enthusiasts have tried in analyzing & predicting the COVID-19 situation in India.",align="center"),
                                     tags$br(),
                                     tags$div(class="card",
-                                    style="background: #83CDFF;
+                                    style="background: #199AF1;
                                              padding:5px;
                                     border-radius:10px;
                                     margin:auto;
@@ -135,7 +135,7 @@ ui <- fluidPage(theme = shinytheme("journal"),
                                     fluidRow(
                                         column(6,
                                                tags$div(class="card",
-                                                        style="background: #FF8E83;
+                                                        style="background: #F32915;
                                              padding:5px;
                                     border-radius:10px;
                                                         margin-bottom:40px; max-width:500px; margin-left:auto; margin-right:auto;"
@@ -148,7 +148,7 @@ ui <- fluidPage(theme = shinytheme("journal"),
                                         ),
                                         column(6,
                                                tags$div(class="card",
-                                                        style="background: #A5F3DB;
+                                                        style="background: #39D800;
                                              padding:5px;
                                     border-radius:10px; max-width:500px; margin:auto;
                                                         ",
@@ -163,7 +163,7 @@ ui <- fluidPage(theme = shinytheme("journal"),
                                     tags$br(),
                                     tags$br(),
                                     tags$div(class="card",
-                                             style="background: #FFEC83;
+                                             style="background: #D8D700;
                                              padding:5px;
                                     border-radius:10px; max-width:500px; margin:auto;",
                                     h2("Total Active Cases",align = "center"),
@@ -270,10 +270,6 @@ ui <- fluidPage(theme = shinytheme("journal"),
                                                                 tags$b(m1$Expected),".",
                                                                 tags$br(),
                                                                 tags$br(),
-                                                                "The most important feature of our prediction is that our prediction in daily cases align with the prediction of total cases.",
-                                                                "Both our algorithm expect that situaton will improve after the Summer 2021.",
-                                                                tags$br(),
-                                                                tags$br(),
                                                                 paste("Our Algorithm has forecasted the latest count (i.e. as of ",
                                                                       latest_date,
                                                                       ") of total cases as ",
@@ -362,7 +358,9 @@ server <- function(input, output, session) {
                               automargin = TRUE),
                    xaxis=list(title='Timeframe',
                               automargin = TRUE),
-                   legend = list(orientation='h',y=-0.25, x=0.2,xanchor='centre'))
+                   legend = list(orientation='h',y=-0.25, x=0.2,xanchor='centre'),
+                   plot_bgcolor='rgb(0,0,0)',
+                paper_bgcolor='rgb(0,0,0)',fig_bgcolor = "rgba(0, 0, 0, 0)")
     })
     observe({
         if(length(input$radio1)==1){
@@ -415,7 +413,9 @@ server <- function(input, output, session) {
                               automargin = TRUE),
                    xaxis=list(title='Timeframe',
                               automargin = TRUE),
-                   legend = list(orientation='h',y=-0.25, x=0.2,xanchor='centre'))
+                   legend = list(orientation='h',y=-0.25, x=0.2,xanchor='centre'),
+                   plot_bgcolor='rgb(0,0,0)',
+                   paper_bgcolor='rgb(0,0,0)',fig_bgcolor = "rgba(0, 0, 0, 0)")
     })
     output$total_pred<-renderPlotly({
         plot_ly(data=df,x = ~Date,
@@ -440,7 +440,9 @@ server <- function(input, output, session) {
                               automargin = TRUE),
                    xaxis=list(title='Timeframe',
                               automargin = TRUE),
-                   legend = list(orientation='h',y=-0.25, x=0.2,xanchor='centre'))
+                   legend = list(orientation='h',y=-0.25, x=0.2,xanchor='centre'),
+                   plot_bgcolor='rgb(0,0,0)',
+                   paper_bgcolor='rgb(0,0,0)',fig_bgcolor = "rgba(0, 0, 0, 0)")
     })
     output$prophetPlot<-renderPlotly({
         opt<-gsub(" ",".",input$radio3)
@@ -457,7 +459,9 @@ server <- function(input, output, session) {
                               automargin = TRUE),
                    xaxis=list(title='Timeframe',
                               automargin = TRUE),
-                   legend = list(orientation='h',y=-0.25, x=0.2,xanchor='centre'))
+                   legend = list(orientation='h',y=-0.25, x=0.2,xanchor='centre'),
+                   plot_bgcolor='rgb(0,0,0)',
+                   paper_bgcolor='rgb(0,0,0)',fig_bgcolor = "rgba(0, 0, 0, 0)")
     })
     output$prophet_title<-renderText({
         paste(input$radio3)
@@ -468,7 +472,10 @@ server <- function(input, output, session) {
         acc<-100*(1-(abs(d$yhat[16:20]-df[c((nrec-4):nrec),opt])/df[c((nrec-4):nrec),opt]))
         df2<-data.frame(as.Date(d$ds[16:20],format="%d %b %y"),d$yhat[16:20],df[c((nrec-4):nrec),opt],round(acc,digits = 4))
         names(df2)<-c("Date","Predicted","Actual","Accuracy (in %)")
-        DT::datatable(df2,options = list(paging=FALSE,searching=FALSE,info=FALSE))
+        DT::datatable(df2,options = list(paging=FALSE,searching=FALSE,info=FALSE,initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+            "}")))
     })
     output$tab_title<-renderText({
         paste(input$radio3)
@@ -477,14 +484,20 @@ server <- function(input, output, session) {
         acc<-100*(1-(abs(df_new_total[c(12:16),2]-df[c((nrec-4):nrec),3])/df[c((nrec-4):nrec),3]))
         df2<-data.frame(df[c((nrec-4):nrec),1],df_new_total[c(12:16),2],df[c((nrec-4):nrec),3],round(acc,digits = 4))
         names(df2)<-c("Date","Predicted","Actual","Accuracy (in %)")
-        DT::datatable(df2,options = list(paging=FALSE,searching=FALSE,info=FALSE))
+        DT::datatable(df2,options = list(paging=FALSE,searching=FALSE,info=FALSE,initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+            "}")))
         #dat<-list(searching=FALSE)
     })
     output$see_data_peak1<-DT::renderDataTable({
         acc<-100*(1-(abs(df_new_daily[c(12:16),2]-df[c((nrec-4):nrec),2])/df[c((nrec-4):nrec),2]))
         df2<-data.frame(df[c((nrec-4):nrec),1],df_new_daily[c(12:16),2],df[c((nrec-4):nrec),2],round(acc,digits = 4))
         names(df2)<-c("Date","Predicted","Actual","Accuracy (in %)")
-        DT::datatable(df2,options = list(paging=FALSE,searching=FALSE,info=FALSE))
+        DT::datatable(df2,options = list(paging=FALSE,searching=FALSE,info=FALSE,initComplete = JS(
+            "function(settings, json) {",
+            "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+            "}")))
     })
 }
 shinyApp(ui = ui, server = server)
