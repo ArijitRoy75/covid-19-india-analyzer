@@ -1,25 +1,25 @@
 {
-    "id": "7B9E7F0B",
+    "id": "144DC663",
     "path": "E:/Projects/covid-19-india-analyzer/init.R",
     "project_path": "init.R",
     "type": "r_source",
     "hash": "0",
     "contents": "",
     "dirty": false,
-    "created": 1594656999712.0,
+    "created": 1594662234935.0,
     "source_on_save": false,
     "relative_order": 4,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "7,62",
+        "cursorPosition": "8,3",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1594657152,
+    "lastKnownWriteTime": 1594662241,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1594657152355,
+    "last_content_update": 1594662241491,
     "read_only": false,
     "read_only_alternatives": []
 }
