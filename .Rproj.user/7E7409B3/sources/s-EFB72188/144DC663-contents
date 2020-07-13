@@ -1,5 +1,7 @@
 my_packages = c("drat","e1071","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","prophet","DT")
 
+remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "")
+
 install_if_missing = function(p) {
   if (p %in% rownames(installed.packages()) == FALSE) {
     install.packages(p, dependencies = TRUE)
@@ -9,4 +11,4 @@ install_if_missing = function(p) {
   }
 }
 invisible(sapply(my_packages, install_if_missing))
-remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "")
+
