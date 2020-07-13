@@ -1,1 +1,8 @@
 libv8-dev
+libudunits2-dev
+libgeos++dev
+libgdal-dev
+libcurl4-openssl-dev
+libxml2-dev
+libssl-dev
+curl
