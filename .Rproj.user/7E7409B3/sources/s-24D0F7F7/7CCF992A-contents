@@ -1,4 +1,4 @@
-helpers.installPackages("rstan","prophet")
+install.packages("prophet")
 
 library(shiny)
 library(plotly)
