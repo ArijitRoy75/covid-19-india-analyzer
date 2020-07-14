@@ -1,9 +1,5 @@
 install.packages("remotes")
 
-remove.packages("rstan")
-remove.packages("StanHeaders")
-if (file.exists(".RData")) file.remove(".RData")
-
 Sys.setenv(MAKEFLAGS = "-j4") # four cores used
 
 remotes::install_github("stan-dev/rstan", ref = "develop", subdir = "rstan/rstan", build_opts = "")
