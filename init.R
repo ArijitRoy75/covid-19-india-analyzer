@@ -1,4 +1,5 @@
 install.packages("remotes")
+install.packages("knitr")
 
 Sys.setenv(MAKEFLAGS = "-j4") # four cores used
 
