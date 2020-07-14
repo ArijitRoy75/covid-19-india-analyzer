@@ -1,6 +1,6 @@
-my_packages = c("drat","rtools","e1071","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","DT")
+my_packages = c("drat","stats","e1071","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","DT")
 
-install.packages("rtools")
+install.packages("prophet",type = "source")
 
 install_if_missing = function(p) {
   if (p %in% rownames(installed.packages()) == FALSE) {

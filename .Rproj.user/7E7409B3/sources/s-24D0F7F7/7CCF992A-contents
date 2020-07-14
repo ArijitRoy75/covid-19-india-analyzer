@@ -1,5 +1,3 @@
-install.packages("prophet")
-
 library(shiny)
 library(plotly)
 library(shinythemes)
@@ -8,6 +6,7 @@ library(shinydashboard)
 library(lubridate)
 library(prophet)
 library(DT)
+library(stats)
 options(scipen = 9999999)
 x<<-"1"
 df<-read.csv("https://api.covid19india.org/csv/latest/case_time_series.csv")
