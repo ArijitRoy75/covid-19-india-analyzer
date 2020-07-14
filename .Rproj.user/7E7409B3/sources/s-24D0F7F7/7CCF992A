@@ -3,22 +3,22 @@
     "path": "E:/Projects/covid-19-india-analyzer/run.R",
     "project_path": "run.R",
     "type": "r_source",
-    "hash": "0",
+    "hash": "2652750773",
     "contents": "",
     "dirty": false,
     "created": 1594567169978.0,
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
-        "cursorPosition": "89,0",
+        "cursorPosition": "0,40",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1594657028,
+    "lastKnownWriteTime": 1594707479,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1594657028653,
+    "last_content_update": 1594707479175,
     "read_only": false,
     "read_only_alternatives": []
 }

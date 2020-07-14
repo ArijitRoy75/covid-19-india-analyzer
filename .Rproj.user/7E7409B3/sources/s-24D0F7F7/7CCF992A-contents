@@ -1,3 +1,5 @@
+helpers.installPackages("rstan","prophet")
+
 library(shiny)
 library(plotly)
 library(shinythemes)
