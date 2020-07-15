@@ -3,7 +3,7 @@
     "path": "E:/Projects/covid-19-india-analyzer/ui.R",
     "project_path": "ui.R",
     "type": "r_source",
-    "hash": "578470285",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1594567821161.0,
@@ -11,8 +11,8 @@
     "relative_order": 2,
     "properties": {
         "tempName": "Untitled1",
-        "cursorPosition": "185,29",
-        "scrollLine": "174"
+        "cursorPosition": "189,18",
+        "scrollLine": "177"
     },
     "folds": "",
     "lastKnownWriteTime": 1594848422,

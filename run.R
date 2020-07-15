@@ -71,21 +71,13 @@ max_acc_total<-100*max(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],
 avg_acc_total<-100*mean(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
 
 
-args <- commandArgs(trailingOnly = TRUE)
 
-if (length(args) == 0) {
-    port <- "12000"
-} else if (length(args) == 1) {
-    port <- args[1]
-}
-
-print(paste("Listening on port", port))
+port <- Sys.getenv('PORT')
 
 shiny::runApp(
     appDir = getwd(),
-    host = "127.0.0.1",
+    host = '0.0.0.0',
     port = as.numeric(port)
 )
-
 
 
