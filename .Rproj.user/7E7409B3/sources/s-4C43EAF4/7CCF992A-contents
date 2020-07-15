@@ -13,13 +13,19 @@ df<-read.csv("https://api.covid19india.org/csv/latest/case_time_series.csv")
 df$Date<-as.Date(df$Date,format="%d %b")
 nrec<-length(df$Date)
 latest_date<-df$Date[nrec]
+
+latest_date<-df$Date[nrec]
+if(latest_date==Sys.Date()){
+    latest_date<-latest_date-1
+    nrec<-nrec-1
+}
+
 formatted_ld<-paste(months(latest_date)," ",mday(latest_date),", ",year(latest_date),sep = "")
 formatted_sd<-paste(months(df[1,1])," ",mday(df[1,1]),", ",year(df[1,1]),sep = "")
 
 total_cases<-c(df$Total.Confirmed[nrec],df$Total.Deceased[nrec],df$Total.Recovered[nrec],df$Total.Confirmed[nrec]-(df$Total.Deceased[nrec]+df$Total.Recovered[nrec]))
 trace_names<-gsub("[.]", " ", names(df)[-1])
 col_names<-c("#CCCC00","#33ff64","#ff4f33")
-
 
 
 log_form<-as.formula(y~c/(1+exp(-k*(x-m))))
