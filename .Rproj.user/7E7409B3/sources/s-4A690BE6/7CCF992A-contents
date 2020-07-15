@@ -12,8 +12,6 @@ df<-read.csv("https://api.covid19india.org/csv/latest/case_time_series.csv")
 df$Date<-as.Date(df$Date,format="%d %b")
 nrec<-length(df$Date)
 latest_date<-df$Date[nrec]
-
-latest_date<-df$Date[nrec]
 if(latest_date==Sys.Date()){
     latest_date<-latest_date-1
     nrec<-nrec-1
