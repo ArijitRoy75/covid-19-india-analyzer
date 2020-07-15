@@ -1,3 +1,1 @@
-options(repos = c(getOption("repos"), rstan = "http://wiki.stan.googlecode.com/git/R")) 
-install.packages('rstan', type = 'source')
-helpers.installPackages("knitr","drat","stats","e1071","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","DT","prophet")
+helpers.installPackages("drat","stats","e1071","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","DT")

@@ -184,36 +184,6 @@ ui <- fluidPage(theme = shinytheme("journal"),
                                       
                                       
                            ),
-                           tabPanel("Predictive Analytics",
-                                    icon = icon("iref",class="fas fa-chart-area"),
-                                    tags$br(),
-                                    tags$br(),
-                                    h1("Predictive Analytics",align="center"),
-                                    tags$br(),
-                                    tags$br(),
-                                    h2(textOutput("prophet_title"),align="center"),
-                                    tags$br(),
-                                    fluidRow(
-                                      sidebarPanel(
-                                        h2("Parameters"),
-                                        awesomeRadio("radio3",
-                                                     h3("Choices"),
-                                                     choices = as.list(trace_names[3:6]),
-                                                     selected = trace_names[3])
-                                      ),
-                                      mainPanel(
-                                        tabsetPanel(
-                                          tabPanel(title = "Graph",
-                                                   plotlyOutput("prophetPlot")),
-                                          tabPanel(title = "Data for Last 5 days",
-                                                   #h2(textOutput("tab_title"),align="center"),
-                                                   tags$br(),
-                                                   DT::dataTableOutput("see_data"))
-                                        )
-                                        
-                                      )
-                                    )
-                           ),
                            tabPanel("About The Team",
                                     icon = icon("iabt",class="far fa-address-card"),
                                     tags$br(),

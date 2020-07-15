@@ -4,7 +4,6 @@ library(shinythemes)
 library(shinyWidgets)
 library(shinydashboard)
 library(lubridate)
-library(prophet)
 library(DT)
 library(stats)
 options(scipen = 9999999)
@@ -71,29 +70,6 @@ max_acc_daily<-100*max(1-(abs(tail(df[,2],16)-df_new_daily[1:16,2])/tail(df[,2],
 max_acc_total<-100*max(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
 avg_acc_total<-100*mean(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
 
-remove_outliers<-function(ts,perc=0.01){
-    svm_model<-e1071::svm(ts, nu=perc, type="one-classification",gamma=0.01,kernel = 'radial')
-    out_svm<-predict(svm_model)
-    index_svm <- which(out_svm==FALSE)
-    ts1<-ts
-    ts1[index_svm]<-NaN
-    ts1<-forecast::na.interp(ts1)
-    return(ts1)
-}
-
-
-for_list<-list()
-for (i in c(4:7)) {
-    df1<-tail(df[,c(1,i)],20)
-    names(df1)<-c('ds','y')
-    df1$y<-remove_outliers(df1$y)
-    m2<-prophet(df1)
-    future <- make_future_dataframe(m2, periods = 15, freq = 'day')
-    forecast <- predict(m2, future)
-    forecast$yhat<-round(forecast$yhat)
-    for_list[[names(df[i])]]<-forecast
-    
-}
 
 args <- commandArgs(trailingOnly = TRUE)
 
