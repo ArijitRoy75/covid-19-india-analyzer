@@ -5,7 +5,7 @@ library(shinyWidgets)
 library(shinydashboard)
 library(lubridate)
 library(DT)
-library(stats)
+library(minpack.lm)
 options(scipen = 9999999)
 x<<-"1"
 df<-read.csv("https://api.covid19india.org/csv/latest/case_time_series.csv")
@@ -24,33 +24,35 @@ total_cases<-c(df$Total.Confirmed[nrec],df$Total.Deceased[nrec],df$Total.Recover
 trace_names<-gsub("[.]", " ", names(df)[-1])
 col_names<-c("#CCCC00","#33ff64","#ff4f33")
 
+end_time<-500
 
-log_form<-as.formula(y~c/(1+exp(-k*(x-m))))
 gauss_form<-as.formula(y ~ a * exp(-0.5 * ((x-b)/c)**2))
 start_g <- list(a=22601.82885084,b=184.39588789,c=43.63552041)
-start_l<- list(c=9.85641503e+05, k=5.71045624e-02, m=1.47460740e+02)
 x<-seq(1,nrec)
-xnew<-seq(nrec-15,nrec+500)
-x_date<-seq(df[nrec-15,1],df[nrec,1]+500,by="day")
+xnew<-seq(nrec-15,nrec+end_time)
+
 
 
 df1<-df[,c(1,2)]
 names(df1)<-c('ds','y')
 nrec<-length(df$Date)
 df1<-cbind(df1,x)
-gauss_model <- nls(formula = gauss_form, data = df1, start = start_g)
+gauss_model <- nlsLM(formula = gauss_form, data = df1, start = start_g)
 ypred<-predict(gauss_model, list(x = xnew))
+while(round(tail(ypred, n=1))!=0)
+{
+    end_time<-end_time+90
+    xnew<-seq(nrec-15,nrec+end_time)
+    ypred<-predict(gauss_model, list(x = xnew))
+}
+x_date<-seq(df[nrec-15,1],df[nrec,1]+end_time,by="day")
 df_new_daily<-data.frame(x_date,round(ypred))
 names(df_new_daily)<-c('date','Expected')
 
+total<-cumsum(c(df$Daily.Confirmed[1:(nrec-15)],df_new_daily[c(2:length(df_new_daily$date)),2]))
 
-df1<-df[,c(1,3)]
-names(df1)<-c('ds','y')
-nrec<-length(df$Date)
-df1<-cbind(df1,x)
-log_model <-  nls(formula = log_form, data = df1, start = start_l)
-ypred<-predict(log_model, list(x = xnew))
-df_new_total<-data.frame(x_date,round(ypred))
+
+df_new_total<-data.frame(x_date,total[(nrec-15):length(total)])
 names(df_new_total)<-c('date','Expected')
 
 rm("df1","ypred")
@@ -67,8 +69,6 @@ avg_acc_daily<-100*mean(1-(abs(tail(df[,2],16)-df_new_daily[1:16,2])/tail(df[,2]
 max_acc_daily<-100*max(1-(abs(tail(df[,2],16)-df_new_daily[1:16,2])/tail(df[,2],16)))
 max_acc_total<-100*max(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
 avg_acc_total<-100*mean(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
-
-
 
 port <- Sys.getenv('PORT')
 
