@@ -32,8 +32,6 @@ start_g <- list(a=22601.82885084,b=184.39588789,c=43.63552041)
 x<-seq(1,nrec)
 xnew<-seq(nrec-15,nrec+end_time)
 
-
-
 df1<-df[,c(1,2)]
 names(df1)<-c('ds','y')
 nrec<-length(df$Date)
@@ -63,6 +61,7 @@ n_stag<-which.max(df_new_total$Expected)
 sat_date<-paste(months(m$date)," ",mday(m$date),", ",year(m$date),sep = "")
 stag_date<-paste(months(m1$date)," ",mday(m1$date),", ",year(m1$date),sep = "")
 
+
 accuracy_daily<-100*(1-abs(df_new_daily[16,2]-df[nrec,2])/df[nrec,2])
 accuracy_total<-100*(1-abs(df_new_total[16,2]-df[nrec,3])/df[nrec,3])
 avg_acc_daily<-100*mean(1-(abs(tail(df[,2],16)-df_new_daily[1:16,2])/tail(df[,2],16)))
@@ -70,7 +69,9 @@ max_acc_daily<-100*max(1-(abs(tail(df[,2],16)-df_new_daily[1:16,2])/tail(df[,2],
 max_acc_total<-100*max(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
 avg_acc_total<-100*mean(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
 
+
 port <- Sys.getenv('PORT')
+#port<-'8888'
 
 shiny::runApp(
     appDir = getwd(),
