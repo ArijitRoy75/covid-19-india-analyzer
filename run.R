@@ -5,6 +5,7 @@ library(shinyWidgets)
 library(shinydashboard)
 library(lubridate)
 library(DT)
+library(dplyr)
 library(minpack.lm)
 options(scipen = 9999999)
 x<<-"1"
@@ -50,7 +51,6 @@ df_new_daily<-data.frame(x_date,round(ypred))
 names(df_new_daily)<-c('date','Expected')
 
 total<-cumsum(c(df$Daily.Confirmed[1:(nrec-15)],df_new_daily[c(2:length(df_new_daily$date)),2]))
-
 
 df_new_total<-data.frame(x_date,total[(nrec-15):length(total)])
 names(df_new_total)<-c('date','Expected')
