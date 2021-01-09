@@ -84,8 +84,8 @@ avg_acc_total<-100*mean(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3]
 # )
 
 
-#port <- Sys.getenv('PORT')
-port<-'8888'
+port <- Sys.getenv('PORT')
+#port<-'8888'
 
 shiny::runApp(
     appDir = getwd(),
