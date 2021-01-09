@@ -16,6 +16,7 @@ nrec<-length(df$Date)
 df$Date<-as.Date(df$Date)
 latest_date<-df$Date[nrec]
 if(latest_date==Sys.Date()){
+    df<-df[-nrec,]
     latest_date<-latest_date-1
     nrec<-nrec-1
 }
