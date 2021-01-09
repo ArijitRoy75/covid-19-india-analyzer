@@ -1,1 +1,1 @@
-helpers.installPackages("ggplot2","minpack.lm","maps","dplyr","stats","e1071","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","DT")
+helpers.installPackages("shiny.router","ggplot2","minpack.lm","maps","dplyr","stats","e1071","shiny","plotly","shinythemes","shinyWidgets","shinydashboard","lubridate","DT")

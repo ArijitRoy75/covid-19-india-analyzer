@@ -32,7 +32,7 @@ end_time<-500
 nlc <- nls.control(maxiter = 10000)
 
 #gauss_form<-as.formula(y ~ a * exp(-0.5 * ((x-b)/c)**2))
-start_g <- list(a=22601.82885084,b=184.39588789,c=43.63552041)
+start_g <- list(a=80345.021529,b=232.408833,c=52.199533)
 x<-seq(1,nrec)
 xnew<-seq(nrec-15,nrec+end_time)
 
@@ -76,10 +76,16 @@ avg_acc_total<-100*mean(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3]
 #states_data<-read.csv("https://api.covid19india.org/csv/latest/state_wise.csv")
 #states_data<-states_data[-1,]
 
+# router <- make_router(
+#     route("/", home_page),
+#     route("dashboard", dashboard_page),
+#     route("peakdata", peakdata_page),
+#     route("about",about_page)
+# )
 
 
-port <- Sys.getenv('PORT')
-#port<-'8888'
+#port <- Sys.getenv('PORT')
+port<-'8888'
 
 shiny::runApp(
     appDir = getwd(),
