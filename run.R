@@ -10,8 +10,10 @@ library(minpack.lm)
 options(scipen = 9999999)
 x<<-"1"
 df<-read.csv("https://api.covid19india.org/csv/latest/case_time_series.csv")
-df$Date<-as.Date(df$Date,format="%d %b")
+df=df[,-1]
+colnames(df)[1] <- "Date"
 nrec<-length(df$Date)
+df$Date<-as.Date(df$Date)
 latest_date<-df$Date[nrec]
 if(latest_date==Sys.Date()){
     latest_date<-latest_date-1
@@ -28,7 +30,7 @@ col_names<-c("#CCCC00","#33ff64","#ff4f33")
 end_time<-500
 nlc <- nls.control(maxiter = 10000)
 
-gauss_form<-as.formula(y ~ a * exp(-0.5 * ((x-b)/c)**2))
+#gauss_form<-as.formula(y ~ a * exp(-0.5 * ((x-b)/c)**2))
 start_g <- list(a=22601.82885084,b=184.39588789,c=43.63552041)
 x<-seq(1,nrec)
 xnew<-seq(nrec-15,nrec+end_time)
@@ -37,7 +39,7 @@ df1<-df[,c(1,2)]
 names(df1)<-c('ds','y')
 nrec<-length(df$Date)
 df1<-cbind(df1,x)
-gauss_model <- nlsLM(formula = gauss_form, data = df1, start = start_g,control = nlc)
+gauss_model <- nlsLM(y ~ a * exp(-0.5 * ((x-b)/c)**2), data = df1, start = start_g,control = nlc)
 ypred<-predict(gauss_model, list(x = xnew))
 while(round(tail(ypred, n=1))!=0)
 {
@@ -70,13 +72,13 @@ max_acc_daily<-100*max(1-(abs(tail(df[,2],16)-df_new_daily[1:16,2])/tail(df[,2],
 max_acc_total<-100*max(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
 avg_acc_total<-100*mean(1-(abs(tail(df[,3],16)-df_new_total[1:16,2])/tail(df[,3],16)))
 
-states_data<-read.csv("https://api.covid19india.org/csv/latest/state_wise.csv")
-states_data<-states_data[-1,]
+#states_data<-read.csv("https://api.covid19india.org/csv/latest/state_wise.csv")
+#states_data<-states_data[-1,]
 
 
 
-#port <- Sys.getenv('PORT')
-port<-'8888'
+port <- Sys.getenv('PORT')
+#port<-'8888'
 
 shiny::runApp(
     appDir = getwd(),
